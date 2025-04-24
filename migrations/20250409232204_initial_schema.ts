@@ -13,16 +13,19 @@ export async function up(knex: Knex): Promise<void> {
     table.string('phone', 20);
     table.jsonb('address');
     table.string('person_type').notNullable()
+    table.string('user_owner_id')
     table.boolean('is_consortium').defaultTo(false);
     table.timestamps(true, true);
   });
 
   await knex.schema.createTable('entries', (table: Knex.TableBuilder) => {
     table.bigIncrements('id').primary();
+    table.string('cufe').nullable()
     table.bigInteger('owner_id').notNullable();
+    table.bigInteger('third_party_id').nullable()
     table.string('concept', 50).notNullable();
-    table.decimal('credit', 10, 2).notNullable();
     table.decimal('debit', 10, 2).notNullable();
+    table.decimal('credit', 10, 2).notNullable();
     table.date('issue_date').notNullable();
     table.timestamps(true, true);
   });
