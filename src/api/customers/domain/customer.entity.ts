@@ -1,6 +1,5 @@
 import { PersonType } from '../../shared/domain/person-type.enum';
 import { DocumentType } from '../../shared/domain/document-type.enum';
-import { DocumentVerification } from '../../shared/domain/document-verification.util';
 
 export class Customer {
   readonly id: number;
@@ -60,15 +59,5 @@ export class Customer {
     if (email) this.email = email;
     if (phone) this.phone = phone;
     this.updatedAt = new Date();
-  }
-
-  /**
-   * Calcula y actualiza el dígito de verificación basado en el documento
-   */
-  calculateVerificationDigit(): void {
-    this.verificationDigit = DocumentVerification.calculateVerificationDigit(
-      this.documentId,
-      this.documentType
-    );
   }
 }
