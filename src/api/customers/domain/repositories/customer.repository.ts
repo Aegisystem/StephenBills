@@ -1,4 +1,4 @@
-import { Customer } from "../customer.entity";
+import { Customer } from "../entities/customer.entity";
 
 export abstract class CustomerRepository {
   abstract save(customer: Customer): Promise<void>;
