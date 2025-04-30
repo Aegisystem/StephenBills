@@ -9,7 +9,7 @@ export class CreateCustomerUseCase {
 
   async execute(dto: CreateCustomerDto): Promise<Customer> {
     // Check if customer with same document ID already exists
-    const existingCustomer = await this.customerRepository.findById(dto.documentId);
+    const existingCustomer = await this.customerRepository.findByDocId(dto.documentId);
     if (existingCustomer) {
       throw new Error('Customer with this document ID already exists');
     }
