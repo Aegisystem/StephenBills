@@ -13,7 +13,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('phone', 20);
     table.jsonb('address');
     table.string('person_type').notNullable()
-    table.string('user_owner_id')
+    table.string('user_owner_id').notNullable()
     table.boolean('is_consortium').defaultTo(false);
     table.timestamps(true, true);
   });

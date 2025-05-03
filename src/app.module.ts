@@ -16,4 +16,5 @@ import { CustomerModule } from './api/customers/customer.module';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}
