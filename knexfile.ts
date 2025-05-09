@@ -1,13 +1,22 @@
 import type { Knex } from 'knex';
 import * as dotenv from 'dotenv';
-import dbConfig from './src/config/dbConfig';
+import * as fs from 'fs';
 
 dotenv.config();
+
+const sslCaPath = process.env.DB_SSL_CA;
+if (!sslCaPath) {
+  throw new Error('DB_SSL_CA environment variable is not defined');
+}
 
 const config = {
   client: 'postgresql',
   connection: {
-    connectionString: dbConfig().database.url,
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: true,
+      ca: fs.readFileSync(sslCaPath).toString()
+    },
   },
   pool: {
     min: 2,
