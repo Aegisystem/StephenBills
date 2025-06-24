@@ -23,19 +23,7 @@ export class Customer {
   public createdAt: Date;
   public updatedAt: Date;
 
-  // Constructor
   constructor(props: Partial<Customer>) {
     Object.assign(this, props);
-  }
-
-  public updateAddress(address: Customer['address']): void {
-    this.address = address;
-    this.updatedAt = new Date();
-  }
-
-  public updateContactInfo(email?: string, phone?: string): void {
-    if (email) this.email = email;
-    if (phone) this.phone = phone;
-    this.updatedAt = new Date();
   }
 }

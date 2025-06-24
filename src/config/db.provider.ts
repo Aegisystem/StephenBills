@@ -1,5 +1,5 @@
 import { Provider } from '@nestjs/common';
-import { Kysely, PostgresDialect } from 'kysely';
+import { CamelCasePlugin, Kysely, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
 
 export const DB = 'DB';
@@ -21,6 +21,7 @@ export const dbProvider: Provider = {
 
     return new Kysely({
       dialect,
+      plugins: [new CamelCasePlugin()],
     });
   },
 }; 

@@ -8,10 +8,13 @@ import { PersonType } from 'src/api/shared/domain/person-type.enum';
 export class CreateCustomerUseCase {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
+  private async checkIfCustomerExistsByDocumentId(documentId: string): Promise<Boolean> {
+    return await this.customerRepository.findByDocId(documentId) !== null;
+  }
+
   async execute(dto: CreateCustomerDto): Promise<Customer> {
-    // Check if customer with same document ID already exists
-    
-    const existingCustomer = await this.customerRepository.findByDocId(dto.documentId);
+   
+    const existingCustomer = await this.checkIfCustomerExistsByDocumentId(dto.documentId);
     if (existingCustomer) {
       throw new Error('Customer with this document ID already exists');
     }
@@ -28,10 +31,8 @@ export class CreateCustomerUseCase {
       throw new Error('Invalid person type');
     }
 
-    // Create new customer instance
     const customer = new Customer(dto);
 
-    // Save customer to repository
     await this.customerRepository.save(customer);
 
     return customer;
