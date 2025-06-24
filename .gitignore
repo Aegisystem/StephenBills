@@ -1,4 +1,4 @@
-# compiled output
+.# compiled output
 /dist
 /node_modules
 /build
@@ -41,6 +41,7 @@ lerna-debug.log*
 .env.test.local
 .env.production.local
 .env.local
+/certs
 
 # temp directory
 .temp
