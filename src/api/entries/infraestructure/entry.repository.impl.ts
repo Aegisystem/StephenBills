@@ -43,7 +43,7 @@ export class EntryRepositoryImpl implements EntryRepository {
     return row ? row : null;
   }
 
-  async findAllByOwnerId(ownerId: bigint): Promise<Entry[]> {
+  async findAllByOwnerId(ownerId: string): Promise<Entry[]> {
     return await this.db
       .selectFrom('entries')
       .selectAll()

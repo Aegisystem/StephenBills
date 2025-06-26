@@ -5,11 +5,10 @@ export class CreateEntryDto {
   cufe: string;
 
   @IsString()
-  @Matches(/^\d+$/, { message: 'ownerId must be a valid bigint (numeric string)' })
   ownerId: string;
 
   @IsOptional()
-  thirdPartyId?: bigint;
+  thirdPartyId?: string;
 
   @IsString()
   @Matches(/^([a-z0-9]+)(\.[a-z0-9]+)*$/, {

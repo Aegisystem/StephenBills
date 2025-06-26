@@ -11,12 +11,8 @@ export class CreateEntryUseCase {
   ) {}
 
   async execute(dto: CreateEntryDto): Promise<Entry> {
-    
-    const entry = new Entry({
-      ...dto,
-      ownerId: BigInt(dto.ownerId),
-      thirdPartyId: dto.thirdPartyId ? BigInt(dto.thirdPartyId) : undefined,
-    });
+    //TODO: Validate the concept of the entry
+    const entry = new Entry(dto)
     await this.entryRepository.save(entry);
     return entry;
   }

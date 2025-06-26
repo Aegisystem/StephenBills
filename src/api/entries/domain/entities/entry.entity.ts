@@ -1,8 +1,8 @@
 export class Entry {
   public readonly id: bigint;
   public readonly cufe: string;
-  public ownerId: bigint;
-  public thirdPartyId?: bigint;
+  public ownerId: string;
+  public thirdPartyId?: string;
   public concept: string;
   public debit: number;
   public credit: number;
