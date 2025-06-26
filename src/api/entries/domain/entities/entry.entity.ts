@@ -5,7 +5,8 @@ export class Entry {
   public thirdPartyId?: bigint;
   public concept: string;
   public debit: number;
-  public issueDate?: string;
+  public credit: number;
+  public issueDate: string;
   public createdAt: Date;
   public updatedAt: Date;
 }

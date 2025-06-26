@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Entry } from "../domain/entities/entry.entity";
 import { DB } from "src/config/db.provider";
 import { Insertable, Kysely } from "kysely";
+import { EntryRepository } from "../domain/repositories/entry.repository";
 
 
 interface Database {
@@ -9,7 +10,7 @@ interface Database {
 }
 
 @Injectable()
-export class EntryRepositoryImpl {
+export class EntryRepositoryImpl implements EntryRepository {
   constructor(
     @Inject(DB)
     private readonly db: Kysely<Database>,
@@ -40,5 +41,33 @@ export class EntryRepositoryImpl {
       .executeTakeFirst();
 
     return row ? row : null;
+  }
+
+  async findAllByOwnerId(ownerId: bigint): Promise<Entry[]> {
+    return await this.db
+      .selectFrom('entries')
+      .selectAll()
+      .where('ownerId', '=', ownerId)
+      .execute();
+  }
+
+  async findByConcept(concept: string): Promise<Entry[]> {
+    return await this.db
+      .selectFrom('entries')
+      .selectAll()
+      .where((eb) =>
+        eb.or([
+          eb('concept', '=', concept),
+          eb('concept', 'like', `${concept}.%`)
+        ])
+      )
+      .execute();
+  }
+
+  async delete(id: bigint): Promise<void> {
+    await this.db
+      .deleteFrom('entries')
+      .where('id', '=', id)
+      .execute();
   }
 }
