@@ -1,6 +1,6 @@
 import { IsDate, IsNumber, IsOptional, IsString, Matches } from "class-validator";
 
-class EntryDto {
+export class CreateEntryDto {
   @IsString()
   cufe: string;
 

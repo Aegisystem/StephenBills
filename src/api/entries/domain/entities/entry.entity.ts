@@ -9,4 +9,8 @@ export class Entry {
   public issueDate: string;
   public createdAt: Date;
   public updatedAt: Date;
+
+  constructor(props: Partial<Entry>) {
+    Object.assign(this, props);
+  }
 }
