@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { ConceptRepository } from "../domain/repositories/concept.repository";
 import { CreateConceptDto } from "../dto/create-concept.dto";
 import { Concept } from "../domain/entities/concept.entity";
@@ -10,8 +10,19 @@ export class CreateConceptUseCase {
   ) {}
 
   async execute(dto: CreateConceptDto): Promise<Concept> {
-    //TODO: Validate the concept of the entry
-    const entry = new Concept(dto)
+    // Check for existing concept with same key and ownerId
+    const existing = await this.conceptRepository.findByKeyAndDocId(dto.key, dto.ownerId);
+
+    if (existing) {
+      throw new ConflictException("A concept with the same key and ownerId already exists.");
+    }
+   
+    const existGlobalConcept = await this.conceptRepository.findByKeyAndDocId(dto.key, "")
+    if (existGlobalConcept) {
+      throw new ConflictException("There's an existing global concept with the same key.");
+    }
+
+    const entry = new Concept(dto);
     await this.conceptRepository.save(entry);
     return entry;
   }

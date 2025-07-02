@@ -1,4 +1,5 @@
-import { IsEnum, IsString, Matches } from "class-validator";
+import { IsBoolean, IsEnum, IsString, Matches } from "class-validator";
+import { NaturalBehavior } from "src/api/shared/domain/natural-behavior";
 
 export class CreateConceptDto {
   
@@ -12,9 +13,9 @@ export class CreateConceptDto {
   key: string;
 
   @IsString()
-  @IsEnum(['credit', 'debit'], {message: 'naturalBehavior must be either "credit" or "debit"'})
-  naturalBehavior: 'credit' | 'debit';
+  @IsEnum(NaturalBehavior, {message: 'naturalBehavior must be either "credit" or "debit"'})
+  naturalBehavior: NaturalBehavior;
 
-  @IsString()
-  editable: boolean;
+  @IsBoolean()
+  editable: boolean = true;
 }
