@@ -1,4 +1,4 @@
-import { IsEnum, IsString } from "class-validator";
+import { IsEnum, IsString, Matches } from "class-validator";
 
 export class CreateConceptDto {
   
@@ -6,6 +6,9 @@ export class CreateConceptDto {
   ownerId: string;
 
   @IsString()
+  @Matches(/^([a-z0-9]+)(\.[a-z0-9]+)*$/, {
+    message: 'concept must follow the format nivel1.nivel2 (only lowercase letters and numbers, separated by dots)',
+  })
   key: string;
 
   @IsString()
