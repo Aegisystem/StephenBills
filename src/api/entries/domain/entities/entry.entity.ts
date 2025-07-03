@@ -6,7 +6,7 @@ export class Entry {
   public concept: string;
   public debit: number;
   public credit: number;
-  public issueDate: string;
+  public issueDate: Date;
   public createdAt: Date;
   public updatedAt: Date;
 

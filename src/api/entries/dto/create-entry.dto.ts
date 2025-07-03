@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsOptional, IsString, Matches } from "class-validator";
+import { IsDate, IsNumber, IsOptional, IsString, Matches, Min } from "class-validator";
 
 export class CreateEntryDto {
   @IsString()
@@ -17,11 +17,13 @@ export class CreateEntryDto {
   concept: string;
 
   @IsNumber()
+  @Min(0)
   debit: number;
 
   @IsNumber()
+  @Min(0)
   credit: number;
 
   @IsDate()
-  issueDate: string;
+  issueDate: Date;
 }
