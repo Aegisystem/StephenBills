@@ -7,8 +7,8 @@ export async function up(knex: Knex): Promise<void> {
     table.string("third_party_id").alter();
   });
 
-  await knex.schema.createTable("concept", (table) => {
-    table.string("id").primary();
+  await knex.schema.createTable("concepts", (table) => {
+    table.bigIncrements('id').primary();
     table.string("owner_id").nullable();
     table.string("key").notNullable();
     table.enu("natural_behavior", ["credit", "debit"]).notNullable();
@@ -16,6 +16,12 @@ export async function up(knex: Knex): Promise<void> {
     table.timestamp("created_at").defaultTo(knex.fn.now()).notNullable();
     table.timestamp("updated_at").defaultTo(knex.fn.now()).notNullable();
   });
+
+  await knex.raw(`
+    CREATE INDEX IF NOT EXISTS idx_concepts_key_trgm
+    ON concepts
+    USING GIN (key gin_trgm_ops)
+  `);
 }
 
 
@@ -26,5 +32,7 @@ export async function down(knex: Knex): Promise<void> {
   });
 
   await knex.schema.dropTableIfExists("concept");
+
+  await knex.raw(`DROP INDEX IF EXISTS idx_concepts_key_trgm`);
 }
 

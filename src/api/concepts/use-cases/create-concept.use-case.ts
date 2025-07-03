@@ -10,7 +10,6 @@ export class CreateConceptUseCase {
   ) {}
 
   async execute(dto: CreateConceptDto): Promise<Concept> {
-    // Check for existing concept with same key and ownerId
     const existing = await this.conceptRepository.findByKeyAndDocId(dto.key, dto.ownerId);
 
     if (existing) {
