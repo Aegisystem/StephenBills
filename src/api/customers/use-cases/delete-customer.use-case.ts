@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';import { CustomerRepository } from '../domain/repositories/customer.repository';
+import { Injectable, NotFoundException } from '@nestjs/common';import { CustomerRepository } from '../domain/repositories/customer.repository';
 
 @Injectable()
 export class GetCustomerUseCase {
@@ -7,7 +7,7 @@ export class GetCustomerUseCase {
   async execute(id: bigint): Promise<void> {
 
     const customer = await this.customerRepository.findById(id);
-    if(!customer) throw new Error("Customer not found");
+    if(!customer) throw new NotFoundException("Customer not found");
 
     await this.customerRepository.delete(id);
   }

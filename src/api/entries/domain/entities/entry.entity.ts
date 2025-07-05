@@ -1,13 +1,16 @@
-import { PersonType } from '../../../shared/domain/person-type.enum';
-
 export class Entry {
   public readonly id: bigint;
   public readonly cufe: string;
-  public owner_id: bigint;
-  public third_party_id?: bigint;
+  public ownerId: string;
+  public thirdPartyId?: string;
   public concept: string;
   public debit: number;
-  public issue_date?: string;
+  public credit: number;
+  public issueDate: Date;
   public createdAt: Date;
   public updatedAt: Date;
+
+  constructor(props: Partial<Entry>) {
+    Object.assign(this, props);
+  }
 }
